@@ -1,9 +1,4 @@
-# myrepo
+# Python programming exercises
 
-Python programming exercises
-
-Library
-    tkinter
-    os
-    arcpy
+# Libraries used: tkinter, os, arcpy
 
