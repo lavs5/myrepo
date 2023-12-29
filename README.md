@@ -1,3 +1,9 @@
 # myrepo
-description
-version control demo
+
+Python programming exercises
+
+Library
+    tkinter
+    os
+    arcpy
+
