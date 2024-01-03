@@ -83,9 +83,9 @@ Using ggplot
 
 with title
 >ggplot(ga) + 
-    geom_sf(fill = "beige") +  
-    labs(title = "The fine state of Georgia") +  
-    theme_minimal()
+  geom_sf(fill = "beige") +  
+  labs(title = "The fine state of Georgia") +  
+  theme_minimal()
 
 with more info
 >ggplot() +
