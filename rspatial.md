@@ -91,8 +91,7 @@ with more info
 >ggplot() +
   geom_sf(data = counties, aes(fill = totpop10)) +
   geom_sf(data = roads, color = "orange") +
-  labs(title = "All roads lead to the ATL",
-       fill = "Population") +
+  labs(title = "All roads lead to the ATL", fill = "Population") +
   theme_minimal()
 
 Using ggspatial, north arrow, scalebar
@@ -100,12 +99,10 @@ Using ggspatial, north arrow, scalebar
 >ggplot() +
   geom_sf(data = counties, aes(fill = totpop10)) +
   geom_sf(data = roads, color = "orange") +
-  labs(title = "All roads lead to the ATL",
-       fill = "Population") +
+  labs(title = "All roads lead to the ATL", fill = "Population") +
   theme_minimal() +
   annotation_scale(location = "bl", width_hint = 0.5) +
-  annotation_north_arrow(location = "tr", which_north = "true",
-                         style = north_arrow_fancy_orienteering())
+  annotation_north_arrow(location = "tr", which_north = "true", style = north_arrow_fancy_orienteering())
 
 
 Using tmap
@@ -118,7 +115,8 @@ choropleth quick thematic map
 
 using tm shape
 >tm_shape(counties) +
-    tm_fill(col = "totpop10", convert2density = T, style = "jenks", title = "Population (x100)") +
+    tm_fill(col = "totpop10", convert2density = T, style = "jenks", 
+    title = "Population (x100)") +
     tm_borders(alpha = 0.3) +
     tm_compass() +
     tm_scale_bar()
