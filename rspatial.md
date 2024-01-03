@@ -50,44 +50,45 @@ Odds-n-End
 
 -----------------------------------------------------------
 
-<library(tidyverse)
-<library(sf)
-<library(tmap)
-<library(spData)
+>library(tidyverse)
+>library(sf)
+>library(tmap)
+>library(spData)
 
 Example: US Counties, Georgia
+
 Major US Roads: https://catalog.data.gov/dataset/tiger-line-shapefile-2016-nation-u-s-primary-roads-national-shapefile
 GA counties: https://arc-garc.opendata.arcgis.com/datasets/dc20713282734a73abe990995de40497_68
 
-<data("us_states") # from spData package
-<ga <- us_states %>% filter(NAME == "Georgia")
-<counties <- st_read("myfolder/counties.shp", quiet=T)
-<roads <- st_read("myfolder/roads.shp") 
+>data("us_states") # from spData package
+>ga <- us_states %>% filter(NAME == "Georgia")
+>counties <- st_read("myfolder/counties.shp", quiet=T)
+>roads <- st_read("myfolder/roads.shp") 
 
-<proj <- "+proj=lcc +lat_1=31.41666666666667 +lat_2=34.28333333333333 +lat_0=0 +lon_0=-83.5 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048006096012192 +no_defs"
+>proj <- "+proj=lcc +lat_1=31.41666666666667 +lat_2=34.28333333333333 +lat_0=0 +lon_0=-83.5 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048006096012192 +no_defs"
 
-<roads <- st_transform(roads, proj)
-<ga <- st_transform(ga, proj)
-<counties <- st_transform(counties, proj)
+>roads <- st_transform(roads, proj)
+>ga <- st_transform(ga, proj)
+>counties <- st_transform(counties, proj)
 
-<roads <- st_crop(roads, ga)
+>roads <- st_crop(roads, ga)
 
-<plot(st_geometry(ga))
-<plot(st_geometry(counties), add = T, col = "red")
-<plot(st_geometry(roads), add = T, col = "blue")
+>plot(st_geometry(ga))
+>plot(st_geometry(counties), add = T, col = "red")
+>plot(st_geometry(roads), add = T, col = "blue")
 
 
 Using ggplot
-<ggplot(ga) +  geom_sf()
+>ggplot(ga) +  geom_sf()
 
 with title
-<ggplot(ga) + 
+>ggplot(ga) + 
     geom_sf(fill = "beige") +  
     labs(title = "The fine state of Georgia") +  
     theme_minimal()
 
 with more info
-<ggplot() +
+>ggplot() +
   geom_sf(data = counties, aes(fill = totpop10)) +
   geom_sf(data = roads, color = "orange") +
   labs(title = "All roads lead to the ATL",
@@ -95,8 +96,8 @@ with more info
   theme_minimal()
 
 Using ggspatial, north arrow, scalebar
-<library(ggspatial)
-<ggplot() +
+>library(ggspatial)
+>ggplot() +
   geom_sf(data = counties, aes(fill = totpop10)) +
   geom_sf(data = roads, color = "orange") +
   labs(title = "All roads lead to the ATL",
@@ -108,15 +109,15 @@ Using ggspatial, north arrow, scalebar
 
 
 Using tmap
-<library(tmap)
-<tmap_mode("plot") 
-<qtm(roads)
+>library(tmap)
+>tmap_mode("plot") 
+>qtm(roads)
 
 choropleth quick thematic map
-<qtm(counties, fill = "totpop10", fill.title = "Total population")
+>qtm(counties, fill = "totpop10", fill.title = "Total population")
 
 using tm shape
-<tm_shape(counties) +
+>tm_shape(counties) +
     tm_fill(col = "totpop10", convert2density = T, style = "jenks", title = "Population (x100)") +
     tm_borders(alpha = 0.3) +
     tm_compass() +
@@ -124,8 +125,8 @@ using tm shape
 
 
 Save map
-<save_tmap(tm, "./fig/my_awesome_map.png", width = 800, height = 1000)
+>save_tmap(tm, "./fig/my_awesome_map.png", width = 800, height = 1000)
 
 View interactive map
-<tmap_mode("view")
-<tm
+>tmap_mode("view")
+>tm
