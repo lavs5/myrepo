@@ -38,6 +38,20 @@ Commonly-used commands
 - The gdalwarp command can be used to reproject images. Here we reproject the WGS84 geographic image to the Mercator projection:
 >gdalwarp -t_srs '+proj=merc +datum=WGS84' HYP_50M_SR_W_4326.tif mercator.tif
 
+- Here we reproject to the Ortho projection.
+>gdalwarp -t_srs '+proj=ortho +datum=WGS84' HYP_50M_SR_W_4326.tif ortho.tif
+
+
+- gdal_merge.py is a python script that can be used for simple mosaicking tasks. Mosaic the east.tif and west.tif into a single file:
+>gdal_merge.py  east.tif west.tif -o merged.tif
+
+- The same task can be accomplished with gdalwarp. gdalwarp has a variety of advantages over gdal_merge, but can be slow to merge many files:
+>gdalwarp east.tif west.tif warpmerged.tif
+
+- You can use ogr2ogr to converts simple features data between file formats. You can use –formats to get the list of the supported formats with read/write information.Convert the countries to GML:
+>ogr2ogr --formats
+>ogr2ogr -f GML countries.xml ne_10m_admin_0_countries.shp
+
 Geoprocessing example:
 Clip:
 >ogr2ogr -skipfailures -clipsrc 
