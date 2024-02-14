@@ -1,0 +1,91 @@
+---
+title: "Rspatial"
+author: "lavs"
+date: "2024-02-11"
+output: html_document
+---
+
+R for maps
+
+Tutorial by
+
+<https://www.emilyburchfield.org/courses/eds/making_maps_in_r>
+
+<https://eriqande.github.io/rep-res-web/lectures/making-maps-with-R.html>
+
+Libraries
+
+```{r}
+install.packages(c("ggplot2","devtools","dplyr","stringr","maps","mapdata","ggmap"))
+```
+
+```{r}
+library(tidyverse)
+library(sf)
+library(tmap)
+library(spData)
+library(ggplot2)
+library(ggmap)
+library(maps)
+library(mapdata)
+
+```
+
+\
+Example: US Counties, Georgia
+
+Data downloaded from:
+
+Major US Roads: <https://catalog.data.gov/dataset/tiger-line-shapefile-2016-nation-u-s-primary-roads-national-shapefile>
+
+GA counties: <https://arc-garc.opendata.arcgis.com/datasets/dc20713282734a73abe990995de40497_68>
+
+Read data, filter by name
+
+```{r}
+# data from spData package
+data("us_states")
+ga <- us_states %>% filter(NAME == "Georgia")
+# set file path
+path <-file.path("C:","Users","lavgo","GitHub","myrepo","rtutorials", fsep="\\")
+#read data from folder
+roads <- st_read("./tl_2016_us_primaryroads/tl_2016_us_primaryroads.shp")
+counties <- st_read("./Counties_Georgia/Counties_Georgia.shp")
+```
+
+Counties and roads are in different projections
+
+Create projection variable
+
+```{r}
+proj <- "+proj=lcc +lat_1=31.41666666666667 +lat_2=34.28333333333333 +lat_0=0 +lon_0=-83.5 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +to_meter=0.3048006096012192 +no_defs"
+```
+
+Transform roads, counties to selected projection using the variable
+
+```{r}
+roads <- st_transform(roads, proj)
+ga <- st_transform(ga, proj)
+counties <- st_transform(counties, proj)
+roads <-st_crop(roads, ga)
+```
+
+plot
+
+```{r}
+plot (st_geometry(ga))
+plot(st_geometry(counties), add=T, col="blue")
+plot (st_geometry(roads), add=T, col="black")
+```
+
+```         
+ggplot() +   geom_sf(data = counties, aes(fill = totpop10)) +   geom_sf(data = roads, color = "orange") +   labs(title = "All roads lead to the ATL", fill = "Population") +   theme_minimal()
+```
+
+```{r}
+ggplot() +
+  geom_sf(data = counties, aes(fill = totpop10)) +
+  geom_sf(data = roads, color = "orange") +
+  labs(title = "All roads lead to the ATL", fill = "Population") +
+  theme_minimal()
+```
